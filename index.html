@@ -70,7 +70,7 @@
         .search-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
         .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 18px; height: 18px; transition: var(--transition); }
         
-        .sort-select { padding: 0.8rem 2.5rem 0.8rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem; background: var(--surface); color: var(--text-main); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1rem; transition: var(--transition); }
+        .sort-select { padding: 0.8rem 2.5rem 0.8rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem; background: var(--surface); color: var(--text-main); cursor: pointer; appearance: none; background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1rem; transition: var(--transition); }
         .sort-select:focus { outline: none; border-color: var(--primary); }
 
         /* Tabs */
@@ -94,10 +94,30 @@
         .product-card:hover { border-color: rgba(185, 28, 28, 0.25); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
         .product-card:active { transform: translateY(-1px); }
         
-        .card-img { height: 150px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: var(--accent-bg); transition: var(--transition); }
-        .product-card:hover .card-img { background: var(--primary-light); }
-        .product-icon { font-size: 3rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); transition: var(--transition); }
-        .product-card:hover .product-icon { transform: scale(1.05) translateY(-3px); }
+        /* CAMBIO: Imagen cuadrada forzada con recorte */
+        .card-img { 
+            height: 200px; 
+            aspect-ratio: 1 / 1; /* Mantiene proporción cuadrada */
+            width: 100%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative; 
+            overflow: hidden; 
+            background: var(--accent-bg); 
+            transition: var(--transition); 
+        }
+        
+        /* CAMBIO: Imagen cubre todo el espacio (recorte) */
+        .card-img img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Recorta la imagen para llenar el cuadrado */
+            object-position: center; 
+            transition: transform 0.4s ease;
+        }
+        .product-card:hover .card-img img { transform: scale(1.05); }
+        .card-img .fallback-icon { font-size: 3.5rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
         
         .card-body { padding: 1.1rem 1.25rem 1.3rem; }
         .card-meta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
@@ -157,7 +177,7 @@
                 </div>
             </div>
             <div class="header-actions">
-                <div class="text-sm font-medium text-secondary" id="productCount" style="color: var(--text-secondary)"></div>
+                <div class="text-sm font-medium" id="productCount" style="color: var(--text-secondary)"></div>
                 <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
                     <svg id="moonIcon" viewBox="0 0 24 24" style="display:none"><path d="M12 3c4.97 0 9 4.03 9 9s-4.03 9-9 9-9-4.03-9-9 4.03-9 9-9zm0 2a7 7 0 100 14 7 7 0 000-14z"/></svg>
                     <svg id="sunIcon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
@@ -215,6 +235,72 @@
     </footer>
 
     <script>
+        // ============================================================
+        // MAPPING: Product keywords -> Image filename (without extension)
+        // ============================================================
+        const productImageMap = {
+            // Yogurts
+            'alquemix-cereal': { keywords: ['CEREAL ALQUERIA'], category: 'YOGURT' },
+            'alquemix-milo': { keywords: ['MILO'], category: 'YOGURT' },
+            'alquemix-trululu': { keywords: ['TRULULU'], category: 'YOGURT' },
+            'Mym\'s': { keywords: ['YOGURT M&M', 'M&M'], category: 'YOGURT' },
+            'yogurt-vaso': { keywords: ['YOGURT DE VASO'], category: 'YOGURT' },
+            'yogurcito-bolsa': { keywords: ['YOGURT BOLSA X9'], category: 'YOGURT' },
+            'yogurt-bolsa-litro': { keywords: ['YOGURT BOLSA', '850 GR'], category: 'YOGURT' },
+            'yogurt-litro': { keywords: ['YOGURT POTE', 'MELOCOTON', 'FRESA'], category: 'YOGURT' },
+            
+            // Leche
+            'leche-900ml': { keywords: ['LECHE DE 900 ML', 'LECHE 900'], category: 'LECHE' },
+            'leche-deslactosada': { keywords: ['LECHE DELACTOSADA', 'DELACTOSADA ALQUERIA', 'LECHE DELACTOSA ALQUERIA'], category: 'LECHE' },
+            'delactosada-1.1l-fre': { keywords: ['DELACTOSADA'], category: 'LECHE' }, // Asigna a Delactosada 1.1L
+            'leche-alqueria': { keywords: ['LECHE ALQUERIA'], category: 'LECHE' },
+            'supercrmosa': { keywords: ['LECHE CREMOSA', 'SUPERCREMOSA'], category: 'LECHE' },
+            'freskadia-400': { keywords: ['LECHE', '400 ML'], category: 'LECHE' }, // Asignado a leche de 400ml
+            'leche-200ml': { keywords: ['LECHE', '200 ML'], category: 'LECHE' }, // Genérico para 200ml
+            'leche-polvo': { keywords: ['LECHE ALQUERIA'], category: 'LECHE' }, // Asignado a leche Alqueria 1100ml por descarte
+            
+            // Cremas
+            'crema-leche-210gr': { keywords: ['CREMA DE LECHE 100X8', 'CREMA 100'], category: 'CREMAS' },
+            'crema-leche-400gr': { keywords: ['CREMA DE LECHE', '400 ML'], category: 'CREMAS' },
+            'crema-leche-900gr': { keywords: ['CREMA DE LECHE', '900 ML'], category: 'CREMAS' },
+            'crema-display-fresk': { keywords: ['CREMA DE LECHE X8', 'CREMA X8', 'CREMA DISPLAY'], category: 'CREMAS' },
+            'crema-leche-alqueria': { keywords: ['CREMA DE LECHE ALQUERIA', '1000 ML', '1OOO'], category: 'CREMAS' },
+            'suero-costeño': { keywords: ['SUERO COSTEÑO', 'SUERO'], category: 'CREMAS' },
+            'chantilly': { keywords: ['CHANTILLY'], category: 'OTROS' },
+            
+            // Avenas
+            'avena-bolsa': { keywords: ['AVENA BOLSA'], category: 'AVENAS' },
+            'avena-caja-autentica': { keywords: ['AVENA VASO AUTENTICA', 'AUTENTICA'], category: 'AVENAS' },
+            'avena-caja-cubana': { keywords: ['AVENA VASO CUBANA', 'CUBANA'], category: 'AVENAS' },
+            
+            // Snacks
+            'arequipe-50g': { keywords: ['AREQUIPE*8 50', 'AREQUIPE 50', '50 GR'], category: 'SNACK' },
+            'arequipe-220gr': { keywords: ['AREQUIPE FRESKALECHE', 'AREQUIPE', '220 GR'], category: 'SNACK' },
+            '5-arequipe': { keywords: ['5 AREQUIPE', 'LITRO AREQUIPE'], category: 'SNACK' },
+            'chocoleche': { keywords: ['CHOCOLECHE'], category: 'SNACK' },
+            'gelatina': { keywords: ['GELATINA'], category: 'SNACK' },
+            
+            // Jugos
+            'tangelo-2litros': { keywords: ['TANGELO', '2 LITROS'], category: 'JUGOS' },
+            'tangelo-286ml': { keywords: ['TANGELO', '276 ML', '286 ML'], category: 'JUGOS' },
+            'tangelo-400ml': { keywords: ['TANGELO', '400 ML'], category: 'JUGOS' },
+            'tangelo-litro': { keywords: ['TANGELO', 'LITRO', 'TANGELO 120'], category: 'JUGOS' },
+            'tangelo-bolsa': { keywords: ['TANGELO BOLSA'], category: 'JUGOS' },
+            'electrolit': { keywords: ['ELECTROLIT'], category: 'JUGOS' },
+        };
+
+        const categoryFallbackIcons = {
+            'LECHE': '',
+            'YOGURT': '',
+            'AVENAS': '',
+            'CREMAS': '',
+            'SNACK': '',
+            'JUGOS': '',
+            'OTROS': '',
+            '': ''
+        };
+
+        // Raw product data with quantities
         const rawData = [
             { unidad: "100 GR", nombre: "CREMA DE LECHE 100X8", cantidad: -51, precio: 21000, categoria: "CREMAS" },
             { unidad: "100 GR", nombre: "CREMOSITO", cantidad: -2881, precio: 1400, categoria: "YOGURT" },
@@ -271,16 +357,59 @@
         const categoryConfig = {
             "ALL": { label: "Todos", icon: "🏪" },
             "LECHE": { label: "Leche", icon: "🥛" },
-            "YOGURT": { label: "Yogurt", icon: "🍶" },
-            "AVENAS": { label: "Avenas", icon: "🥣" },
+            "YOGURT": { label: "Yogurt", icon: "" },
+            "AVENAS": { label: "Avenas", icon: "" },
             "CREMAS": { label: "Cremas", icon: "🥄" },
-            "SNACK": { label: "Snacks", icon: "🍫" },
-            "JUGOS": { label: "Jugos", icon: "🥤" },
-            "OTROS": { label: "Otros", icon: "📦" }
+            "SNACK": { label: "Snacks", icon: "" },
+            "JUGOS": { label: "Jugos", icon: "" },
+            "OTROS": { label: "Otros", icon: "" }
         };
         
         let activeCategory = "ALL";
         let products = [];
+
+        // Función para obtener extensión
+        function getFileExtension(filename) {
+            const pngFiles = [
+                'alquemix-cereal', 'alquemix-milo', 'alquemix-truluu',
+                'avena-bolsa', 'avena-caja-autentica', 'avena-caja-cubana',
+                'Chantilly', 'chocoleche', 'crema-display-fresk',
+                'crema-leche-210gr', 'crema-leche-400gr', 'crema-leche-900gr',
+                'delactosada-1.1l-fre', 'freskadia-400', 'gelatina',
+                'leche-deslactosada', 'leche-polvo', 'leche-200ml',
+                'Suero-costeño', 'supercrmosa', 'Tangelo2litros', 'tangelo-286ml',
+                'tangelo-400ml', 'tangelo-bolsa', 'tangelo-litro',
+                'yogurt-bolsa-litro', 'yogurt-litro'
+            ];
+            const jpgFiles = [
+                'arequipe-220gr', 'cereal-freskaleche', 'leche-900ml',
+                'Mym\'s', 'yogurcito-bolsa', 'yogurt-vaso', 'arequipe-50g', '5-arequipe'
+            ];
+            
+            for (const f of pngFiles) {
+                if (filename.includes(f) || f.includes(filename)) return '.png';
+            }
+            for (const f of jpgFiles) {
+                if (filename.includes(f) || f.includes(filename)) return '.jpg';
+            }
+            return '.png';
+        }
+
+        function getProductImage(product) {
+            for (const [filename, config] of Object.entries(productImageMap)) {
+                for (const keyword of config.keywords) {
+                    if (product.nombre.toUpperCase().includes(keyword.toUpperCase())) {
+                        const ext = getFileExtension(filename);
+                        return `./images/${filename}${ext}`;
+                    }
+                }
+            }
+            return null;
+        }
+
+        function getFallbackIcon(product) {
+            return categoryFallbackIcons[product.categoria] || '';
+        }
 
         function init() {
             processProducts();
@@ -299,7 +428,8 @@
                 ...p,
                 categoria: p.categoria.trim() || "OTROS",
                 etiquetaTamano: "",
-                unidadClean: p.unidad.replace("OOO", "000")
+                unidadClean: p.unidad.replace("OOO", "000"),
+                imagen: getProductImage(p)
             }));
 
             const groups = {};
@@ -418,15 +548,22 @@
                 const config = categoryConfig[p.categoria] || categoryConfig['OTROS'];
                 const isBest = p.cantidad <= -1000;
                 const delay = (i % 12) * 40;
+                
+                // Renderizado de imagen con fallback
+                const imgHtml = p.imagen 
+                    ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       <span class="fallback-icon" style="display:none;">${getFallbackIcon(p)}</span>`
+                    : `<span class="fallback-icon">${getFallbackIcon(p)}</span>`;
+
                 return `
                 <article class="product-card animate-card" style="animation-delay: ${delay}ms" onclick="openWhatsApp('${encodeURIComponent(p.nombre)}')">
                     <div class="card-img">
-                        <span class="product-icon">${config.icon}</span>
+                        ${imgHtml}
                     </div>
                     <div class="card-body">
                         <div class="card-meta-row">
                             <span class="card-category">${config.label}</span>
-                            <span class="card-bestseller">${isBest ? '🔥 Top Ventas' : '⚡ Popular'}</span>
+                            <span class="card-bestseller">${isBest ? '🔥 Top Ventas' : ' Popular'}</span>
                         </div>
                         <h3 class="card-title">${p.nombre}</h3>
                         <div class="card-footer">
