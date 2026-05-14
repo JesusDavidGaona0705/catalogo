@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Premium Freskaleche & Alquería</title>
+    <title>Catálogo Freskaleche & Alquería</title>
     <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/400.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/500.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/600.css" rel="stylesheet">
@@ -208,7 +208,7 @@
 
     <script>
         // ============================================================
-        // MAPPING ACTUALIZADO: Productos -> Imágenes (Todas PNG)
+        // MAPPING: Productos -> Imágenes (Todas PNG)
         // ============================================================
         const productImageMap = {
             // YOGURT
@@ -220,20 +220,22 @@
             'yogurcito-bolsa': { keywords: ['YOGURT BOLSA X9'], priority: 10 },
             'yogurt-bolsa-900g': { keywords: ['850 GR', 'YOGURT BOLSA*'], priority: 10 },
             'yogurt-pote-melocoton': { keywords: ['MELOCOTON'], priority: 10 },
-            'yogurt-litro': { keywords: ['YOGURT POTE', 'FRESA', 'YOGURT POTE'], priority: 5 },
+            'yogurt-litro': { keywords: ['YOGURT POTE', 'FRESA'], priority: 5 },
             'cremosito': { keywords: ['CREMOSITO'], priority: 10 },
             'cereal-freskaleche': { keywords: ['CEREAL FRESKALECHE'], priority: 10 },
-            'flips': { keywords: ['FLIPS'], priority: 10 },
+            'alquemix-flips': { keywords: ['FLIPS'], priority: 10 },
             
             // LECHE
             'leche-1100ml-alqueria': { keywords: ['LECHE ALQUERIA'], priority: 10 },
-            'leche-delactosada900ml-alquería': { keywords: ['LECHE DELACTOSA ALQUERIA'], priority: 10 },
+            'leche-delactosada-800ml-alquería': { keywords: ['DELACTOSADA ALQUERIA'], priority: 10 },
             'delactosada-1.1l-freskaleche': { keywords: ['DELACTOSADA', '1100 ML', '1.1L'], priority: 10 },
-            'leche-deslactosada-freskaleche': { keywords: ['LECHE DELACTOSADA', 'DELACTOSADA ALQUERIA', 'DELACTOSADA'], priority: 8 },
+            'leche-deslactosada-freskaleche-400ml': { keywords: ['LECHE DELACTOSADA', '400 ML'], priority: 10 },
             'leche-400ml': { keywords: ['LECHE', '400 ML'], priority: 10 },
             'leche-900ml': { keywords: ['LECHE DE 900 ML', 'LECHE 900'], priority: 10 },
             'supercremosa': { keywords: ['LECHE CREMOSA', 'SUPERCREMOSA'], priority: 10 },
             'leche-polvo': { keywords: ['LECHE', '200 ML'], priority: 3 },
+            'leche-almendras': { keywords: ['LECHE ALMENDRAS'], priority: 10 },
+            'freskadia-400': { keywords: ['FREKADIA', '400 ML', '100% LECHE'], priority: 10 },
             
             // AVENAS
             'avena-bolsa': { keywords: ['AVENA BOLSA'], priority: 10 },
@@ -242,10 +244,10 @@
             
             // CREMAS
             'crema-display-freskaleche-caja': { keywords: ['CREMA DE LECHE X8', 'CREMA X8', 'CREMA DISPLAY'], priority: 10 },
-            'crema-leche-170gr': { keywords: ['CREMA DE LECHE 100X8', 'CREMA DE LECHE', '170 ML'], priority: 10 },
+            'crema-leche-170gr': { keywords: ['CREMA DE LECHE', '170 ML'], priority: 10 },
             'crema-leche-400gr': { keywords: ['CREMA DE LECHE', '400 ML'], priority: 10 },
             'crema-leche-900gr': { keywords: ['CREMA DE LECHE', '900 ML', 'CREMA DE LECHE ALQUERIA'], priority: 10 },
-            'Suero-costeño': { keywords: ['SUERO COSTEÑO', 'SUERO'], priority: 10 },
+            'Suero-costeño': { keywords: ['SUERO COSTEÑO'], priority: 10 },
             'Chantilly': { keywords: ['CHANTILLY'], priority: 10 },
             
             // SNACK
@@ -253,14 +255,13 @@
             'arequipe-220gr': { keywords: ['AREQUIPE FRESKALECHE', 'AREQUIPE', '220 GR'], priority: 10 },
             'chocoleche': { keywords: ['CHOCOLECHE'], priority: 10 },
             'gelatina': { keywords: ['GELATINA'], priority: 10 },
-            '5-arequipe': { keywords: ['5 AREQUIPE'], priority: 10 },
             
             // JUGOS
             'Tangelo2litros': { keywords: ['TANGELO', '2 LITROS'], priority: 10 },
             'tangelo-286ml': { keywords: ['TANGELO', '276 ML', '286 ML'], priority: 10 },
             'tangelo-400ml': { keywords: ['TANGELO', '400 ML'], priority: 10 },
-            'tangelo-litro': { keywords: ['TANGELO', 'LITRO', 'TANGELO 120'], priority: 10 },
-            'tangelo-bolsa': { keywords: ['TANGELO BOLSA'], priority: 10 },
+            'tangelo-litro': { keywords: ['TANGELO', 'LITRO'], priority: 10 },
+            'tangelo-bolsa': { keywords: ['TANGELO 120*30', 'TANGELO BOLSA'], priority: 10 },
             'electrolit': { keywords: ['ELECTROLIT'], priority: 10 },
         };
 
@@ -271,79 +272,97 @@
             'CREMAS': '🥄',
             'SNACK': '🍫',
             'JUGOS': '🥤',
-            'OTROS': '📦',
             '': ''
         };
 
+        // ============================================================
+        // ORDEN PERSONALIZADO POR CATEGORÍA
+        // ============================================================
+        
+        // Orden de categorías para vista "Todos"
+        const categoryOrderPriority = {
+            'LECHE': 1,
+            'YOGURT': 2,
+            'AVENAS': 3,
+            'CREMAS': 4,
+            'SNACK': 5,
+            'JUGOS': 6,
+            'OTROS': 7
+        };
+
+        // Datos RAW corregidos
         const rawData = [
-            { unidad: "100 GR", nombre: "CREMA DE LECHE 100X8", cantidad: -51, precio: 21000, categoria: "CREMAS" },
+            // CREMAS (Solo las permitidas)
+            { unidad: "125 ML", nombre: "CREMA DE LECHE X8", cantidad: -884, precio: 22000, categoria: "CREMAS" },
+            { unidad: "170 GR", nombre: "CREMA DE LECHE", cantidad: -5804, precio: 4200, categoria: "CREMAS" }, // CORREGIDO: 170 ML -> 170 GR
+            { unidad: "400 GR", nombre: "CREMA DE LECHE", cantidad: -2880, precio: 9800, categoria: "CREMAS" }, // CORREGIDO: 400 ML -> 400 GR
+            { unidad: "850 GR", nombre: "CREMA DE LECHE ALQUERIA", cantidad: 6, precio: 19000, categoria: "CREMAS" }, // CORREGIDO: 1000 ML -> 850 GR
+            { unidad: "200 GR", nombre: "SUERO COSTEÑO", cantidad: -3158, precio: 4500, categoria: "CREMAS" }, // CORREGIDO: 200 ML -> 200 GR
+            { unidad: "250 GR", nombre: "CHANTILLY", cantidad: -86, precio: 17000, categoria: "" },
+            
+            // YOGURT
             { unidad: "100 GR", nombre: "CREMOSITO", cantidad: -2881, precio: 1400, categoria: "YOGURT" },
             { unidad: "100 GR", nombre: "TRULULU ALQUERIA", cantidad: -950, precio: 2800, categoria: "YOGURT" },
             { unidad: "100 GR", nombre: "YOGURT M&M'S", cantidad: -3301, precio: 2600, categoria: "YOGURT" },
-            { unidad: "1100 ML", nombre: "DELACTOSADA", cantidad: -121, precio: 32000, categoria: "LECHE" },
-            { unidad: "1100 ML", nombre: "LECHE ALQUERIA", cantidad: -1848, precio: 4700, categoria: "LECHE" },
-            { unidad: "1100 ML", nombre: "LECHE DELACTOSA ALQUERIA", cantidad: -1, precio: 34000, categoria: "LECHE" },
-            { unidad: "125 ML", nombre: "CREMA DE LECHE X8", cantidad: -884, precio: 22000, categoria: "CREMAS" },
-            { unidad: "150 GR", nombre: "AREQUIPE FRESKALECHE", cantidad: -315, precio: 4000, categoria: "SNACK" },
             { unidad: "150 GR", nombre: "YOGURT DE VASO", cantidad: -1858, precio: 2200, categoria: "YOGURT" },
             { unidad: "170 ML", nombre: "CEREAL ALQUERIA", cantidad: -4876.6, precio: 3800, categoria: "YOGURT" },
             { unidad: "170 ML", nombre: "CEREAL FRESKALECHE", cantidad: -9028, precio: 3400, categoria: "YOGURT" },
-            { unidad: "170 ML", nombre: "CHOCOLECHE X10", cantidad: -132, precio: 19000, categoria: "SNACK" },
-            { unidad: "170 ML", nombre: "CREMA DE LECHE", cantidad: -5804, precio: 4200, categoria: "CREMAS" },
             { unidad: "170 ML", nombre: "FLIPS", cantidad: -803, precio: 3800, categoria: "YOGURT" },
             { unidad: "170 ML", nombre: "MILO", cantidad: -437, precio: 3800, categoria: "YOGURT" },
-            { unidad: "1000 ML", nombre: "CREMA DE LECHE ALQUERIA", cantidad: 6, precio: 19000, categoria: "CREMAS" },
-            { unidad: "1000 ML", nombre: "LECHE CREMOSA", cantidad: -6, precio: 34000, categoria: "LECHE" },
             { unidad: "1000 ML", nombre: "YOGURT POTE MELOCOTON", cantidad: -6, precio: 15000, categoria: "YOGURT" },
-            { unidad: "2 LITROS", nombre: "TANGELO", cantidad: -32, precio: 7200, categoria: "JUGOS" },
-            { unidad: "200 ML", nombre: "AVENA BOLSA X 8", cantidad: -1197, precio: 14000, categoria: "AVENAS" },
-            { unidad: "200 ML", nombre: "LECHE", cantidad: -4535, precio: 900, categoria: "LECHE" },
-            { unidad: "200 ML", nombre: "SUERO COSTEÑO", cantidad: -3158, precio: 4500, categoria: "CREMAS" },
             { unidad: "200 ML", nombre: "YOGURT BOLSA X9", cantidad: -1042, precio: 12500, categoria: "YOGURT" },
-            { unidad: "220 GR", nombre: "AREQUIPE FRESKALECHE", cantidad: -130, precio: 5500, categoria: "SNACK" },
+            { unidad: "850 GR", nombre: "YOGURT BOLSA* 850 GR", cantidad: -582, precio: 5700, categoria: "YOGURT" }, // CORREGIDO: LITRO -> 850 GR
+            { unidad: "LITRO", nombre: "YOGURT POTE  FRESA", cantidad: 0, precio: 15000, categoria: "YOGURT" },
+
+            // AVENAS
+            { unidad: "200 ML", nombre: "AVENA BOLSA X 8", cantidad: -1197, precio: 14000, categoria: "AVENAS" },
             { unidad: "220 ML", nombre: "AVENA VASO AUTENTICA", cantidad: -1757, precio: 2900, categoria: "AVENAS" },
             { unidad: "220 ML", nombre: "AVENA VASO CUBANA", cantidad: -433, precio: 2900, categoria: "AVENAS" },
-            { unidad: "250 GR", nombre: "CHANTILLY", cantidad: -86, precio: 17000, categoria: "" },
-            { unidad: "276 ML", nombre: "TANGELO", cantidad: -1572, precio: 1300, categoria: "JUGOS" },
-            { unidad: "400 ML", nombre: "CREMA DE LECHE", cantidad: -2880, precio: 9800, categoria: "CREMAS" },
-            { unidad: "400 ML", nombre: "LECHE", cantidad: -17780, precio: 2000, categoria: "LECHE" },
-            { unidad: "400 ML", nombre: "LECHE DELACTOSADA", cantidad: -1137, precio: 2000, categoria: "LECHE" },
-            { unidad: "400 ML", nombre: "SUERO", cantidad: -12, precio: 9000, categoria: "SNACK" },
-            { unidad: "400 ML", nombre: "TANGELO", cantidad: -1688, precio: 1500, categoria: "JUGOS" },
-            { unidad: "625ML", nombre: "ELECTROLIT", cantidad: 4.42, precio: 80000, categoria: "JUGOS" },
-            { unidad: "90 ML", nombre: "GELATINA", cantidad: -1907, precio: 1500, categoria: "SNACK" },
-            { unidad: "900 ML", nombre: "CREMA DE LECHE", cantidad: -2191, precio: 18500, categoria: "CREMAS" },
-            { unidad: "900 ML", nombre: "DELACTOSADA ALQUERIA", cantidad: -3379, precio: 4200, categoria: "LECHE" },
-            { unidad: "900 ML", nombre: "LECHE", cantidad: 90, precio: 4000, categoria: "CREMAS" },
+
+            // LECHE (Orden personalizado definido por usuario)
             { unidad: "900 ML", nombre: "LECHE DE 900 ML", cantidad: -12963, precio: 3700, categoria: "LECHE" },
-            { unidad: "900 ML", nombre: "LECHE DELACTOSADA", cantidad: -458, precio: 4000, categoria: "LECHE" },
-            { unidad: "GRAMO", nombre: "AREQUIPE*8 50", cantidad: -192, precio: 12000, categoria: "SNACK" },
-            { unidad: "GRAMO", nombre: "CREMA DE LECHE FRESKALECHE 190 GR", cantidad: -64, precio: 4200, categoria: "CREMAS" },
-            { unidad: "LITRO", nombre: "5 AREQUIPE", cantidad: -8, precio: 56000, categoria: "SNACK" },
+            { unidad: "400 ML", nombre: "LECHE", cantidad: -17780, precio: 2000, categoria: "LECHE" },
+            { unidad: "200 ML", nombre: "LECHE", cantidad: -4535, precio: 900, categoria: "LECHE" },
+            { unidad: "800 ML", nombre: "DELACTOSADA ALQUERIA", cantidad: -3379, precio: 4200, categoria: "LECHE" }, // CORREGIDO: 900 -> 800 ML
+            { unidad: "400 ML", nombre: "LECHE DELACTOSADA", cantidad: -1137, precio: 2000, categoria: "LECHE" },
+            { unidad: "1100 ML", nombre: "Leche delactosada freskaleche extralitro", cantidad: -121, precio: 32000, categoria: "LECHE" }, // MODIFICADO: Nombre cambiado
+            { unidad: "1100 ML", nombre: "Leche delactosada alquería megalitro", cantidad: -1, precio: 34000, categoria: "LECHE" }, // NUEVO: Producto agregado
+            { unidad: "1000 ML", nombre: "Leche Alquería supercremosa megalitro", cantidad: -6, precio: 34000, categoria: "LECHE" }, // MODIFICADO: Nombre cambiado
+            { unidad: "1100 ML", nombre: "LECHE ALQUERIA", cantidad: -1848, precio: 4700, categoria: "LECHE" },
             { unidad: "LITRO", nombre: "LECHE ALMENDRAS", cantidad: -15, precio: 16000, categoria: "" },
+            
+            // SNACK (Reordenados según solicitud)
+            { unidad: "90 GR", nombre: "GELATINA", cantidad: -1907, precio: 1500, categoria: "SNACK" }, // CORREGIDO: 90 ML -> 90 GR
+            { unidad: "GRAMO", nombre: "AREQUIPE*8 50", cantidad: -192, precio: 12000, categoria: "SNACK" },
+            { unidad: "150 GR", nombre: "AREQUIPE FRESKALECHE", cantidad: -315, precio: 4000, categoria: "SNACK" },
+            { unidad: "220 GR", nombre: "AREQUIPE FRESKALECHE", cantidad: -130, precio: 5500, categoria: "SNACK" },
+            { unidad: "170 ML", nombre: "CHOCOLECHE X10", cantidad: -132, precio: 19000, categoria: "SNACK" },
+
+            // JUGOS (Orden personalizado definido por usuario)
+            { unidad: "120 ML", nombre: "TANGELO 120*30", cantidad: -22, precio: 13500, categoria: "JUGOS" }, // CORREGIDO: LITRO -> 120 ML
+            { unidad: "286 ML", nombre: "TANGELO", cantidad: -1572, precio: 1300, categoria: "JUGOS" }, // CORREGIDO: 276 -> 286 ML
+            { unidad: "400 ML", nombre: "TANGELO", cantidad: -1688, precio: 1500, categoria: "JUGOS" },
             { unidad: "LITRO", nombre: "TANGELO", cantidad: -223, precio: 3500, categoria: "JUGOS" },
-            { unidad: "LITRO", nombre: "TANGELO 120*30", cantidad: -22, precio: 13500, categoria: "JUGOS" },
-            { unidad: "LITRO", nombre: "YOGURT BOLSA* 850 GR", cantidad: -582, precio: 5700, categoria: "YOGURT" },
-            { unidad: "LITRO", nombre: "YOGURT POTE  FRESA", cantidad: 0, precio: 15000, categoria: "YOGURT" }
+            { unidad: "2 LITROS", nombre: "TANGELO", cantidad: -32, precio: 7200, categoria: "JUGOS" },
+            { unidad: "625ML", nombre: "ELECTROLIT", cantidad: 4.42, precio: 80000, categoria: "JUGOS" }
         ];
 
-        const categoryOrder = ["ALL", "LECHE", "YOGURT", "AVENAS", "CREMAS", "SNACK", "JUGOS", "OTROS"];
+        const categoryTabsOrder = ["ALL", "LECHE", "YOGURT", "AVENAS", "CREMAS", "SNACK", "JUGOS"];
         const categoryConfig = {
             "ALL": { label: "Todos", icon: "🏪" },
             "LECHE": { label: "Leche", icon: "🥛" },
             "YOGURT": { label: "Yogurt", icon: "" },
-            "AVENAS": { label: "Avena", icon: "" },
-            "CREMAS": { label: "Crema de leche", icon: "🥄" },
+            "AVENAS": { label: "Avenas", icon: "" },
+            "CREMAS": { label: "Cremas", icon: "" },
             "SNACK": { label: "Snacks", icon: "🍫" },
-            "JUGOS": { label: "Jugos", icon: "🥤" },
-            "OTROS": { label: "Otros", icon: "📦" }
+            "JUGOS": { label: "Jugos", icon: "🥤" }
         };
         
         let activeCategory = "ALL";
         let products = [];
 
         // ============================================================
-        // FUNCIÓN: Obtener imagen del producto con priorización
+        // FUNCIÓN: Obtener imagen del producto
         // ============================================================
         function getProductImage(product) {
             let bestMatch = null;
@@ -353,7 +372,6 @@
             for (const [filename, config] of Object.entries(productImageMap)) {
                 for (const keyword of config.keywords) {
                     if (product.nombre.toUpperCase().includes(keyword.toUpperCase())) {
-                        // Priorizar por: 1) priority definido, 2) longitud de keyword (más específico)
                         const score = config.priority * 100 + keyword.length;
                         if (score > (maxPriority * 100 + maxKeywordLength)) {
                             maxPriority = config.priority;
@@ -368,6 +386,59 @@
                 return `./images/${bestMatch}.png`;
             }
             return null;
+        }
+
+        // ============================================================
+        // FUNCIÓN: Obtener orden personalizado según categoría
+        // ============================================================
+        function getCustomSortOrder(product) {
+            const name = product.nombre.toUpperCase().trim();
+            const cat = product.categoria;
+            const unit = product.unidadClean;
+
+            // Orden LECHE
+            if (cat === 'LECHE') {
+                if (name === 'LECHE DE 900 ML') return 1;
+                if (name === 'LECHE' && unit === '400 ML') return 2;
+                if (name === 'LECHE' && unit === '200 ML') return 3;
+                if (name === 'DELACTOSADA ALQUERIA') return 4;
+                if (name === 'LECHE DELACTOSADA' && unit === '400 ML') return 5;
+                if (name === 'LECHE DELACTOSADA FRESKALECHE EXTRALITRO') return 6;
+                if (name === 'LECHE DELACTOSADA ALQUERÍA MEGALITRO') return 7;
+                if (name === 'LECHE ALQUERÍA SUPERCREMOSA MEGALITRO') return 8;
+                if (name === 'LECHE ALQUERIA') return 9;
+                if (name === 'LECHE ALMENDRAS') return 10;
+            }
+
+            // Orden CREMAS
+            if (cat === 'CREMAS') {
+                if (name.includes('X8') || unit.includes('125 ML')) return 1;
+                if (name === 'CREMA DE LECHE' && unit === '170 GR') return 2;
+                if (name === 'CREMA DE LECHE' && unit === '400 GR') return 3;
+                if (name.includes('ALQUERIA')) return 4;
+                if (name.includes('SUERO COSTEÑO')) return 5;
+                if (name.includes('CHANTILLY')) return 6;
+            }
+
+            // Orden SNACKS
+            if (cat === 'SNACK') {
+                if (name === 'GELATINA') return 1;
+                if (name === 'AREQUIPE*8 50') return 2;
+                if (name === 'AREQUIPE FRESKALECHE' && unit === '150 GR') return 3;
+                if (name === 'AREQUIPE FRESKALECHE' && unit === '220 GR') return 4;
+                if (name === 'CHOCOLECHE X10') return 5;
+            }
+
+            // Orden TANGELOS
+            if (name.includes('TANGELO')) {
+                if (name.includes('120*30') || name.includes('BOLSA')) return 1;
+                if (unit === '286 ML') return 2;
+                if (unit === '400 ML') return 3;
+                if (unit === 'LITRO') return 4;
+                if (unit === '2 LITROS') return 5;
+            }
+
+            return 99;
         }
 
         function getFallbackIcon(product) {
@@ -443,7 +514,7 @@
 
         function renderTabs() {
             const container = document.getElementById('categoryTabs');
-            container.innerHTML = categoryOrder.map(cat => {
+            container.innerHTML = categoryTabsOrder.map(cat => {
                 const config = categoryConfig[cat];
                 const count = cat === 'ALL' ? products.length : products.filter(p => p.categoria === cat).length;
                 const activeClass = cat === activeCategory ? 'active' : '';
@@ -470,23 +541,58 @@
             document.getElementById('productCount').textContent = `${filtered.length} producto${filtered.length !== 1 ? 's' : ''}`;
         }
 
+        // ============================================================
+        // FUNCIÓN CORREGIDA: Filtrado explícito para "TODOS"
+        // ============================================================
         function getFilteredProducts() {
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
             const sort = document.getElementById('sortSelect').value;
 
-            let filtered = products.filter(p => {
-                const matchCat = activeCategory === 'ALL' || p.categoria === activeCategory;
-                const matchSearch = !search || 
-                    p.nombre.toLowerCase().includes(search) || 
-                    p.categoria.toLowerCase().includes(search) ||
-                    p.unidadClean.toLowerCase().includes(search);
-                return matchCat && matchSearch;
-            });
+            let filtered;
+            
+            // LÓGICA CORREGIDA: Separación explícita para "TODOS"
+            if (activeCategory === 'ALL') {
+                filtered = products.filter(p => {
+                    const matchSearch = !search || 
+                        p.nombre.toLowerCase().includes(search) || 
+                        p.categoria.toLowerCase().includes(search) ||
+                        p.unidadClean.toLowerCase().includes(search);
+                    return matchSearch;
+                });
+            } else {
+                filtered = products.filter(p => {
+                    const matchCat = p.categoria === activeCategory;
+                    const matchSearch = !search || 
+                        p.nombre.toLowerCase().includes(search) || 
+                        p.categoria.toLowerCase().includes(search) ||
+                        p.unidadClean.toLowerCase().includes(search);
+                    return matchCat && matchSearch;
+                });
+            }
 
-            if (sort === 'bestseller') filtered.sort((a, b) => a.cantidad - b.cantidad);
-            else if (sort === 'price-asc') filtered.sort((a, b) => a.precio - b.precio);
-            else if (sort === 'price-desc') filtered.sort((a, b) => b.precio - a.precio);
-            else if (sort === 'name-asc') filtered.sort((a, b) => a.nombre.localeCompare(b.nombre));
+            // LÓGICA DE ORDENAMIENTO INTELIGENTE
+            if (sort === 'bestseller' || sort === 'default') {
+                filtered.sort((a, b) => {
+                    // Si estamos en "Todos", agrupar por categoría primero
+                    if (activeCategory === 'ALL') {
+                        const catA = categoryOrderPriority[a.categoria] || 99;
+                        const catB = categoryOrderPriority[b.categoria] || 99;
+                        if (catA !== catB) return catA - catB;
+                    }
+                    // Orden personalizado por categoría
+                    const orderA = getCustomSortOrder(a);
+                    const orderB = getCustomSortOrder(b);
+                    if (orderA !== orderB) return orderA - orderB;
+                    // Si tienen el mismo orden, ordenar por ventas
+                    return a.cantidad - b.cantidad;
+                });
+            } else if (sort === 'price-asc') {
+                filtered.sort((a, b) => a.precio - b.precio);
+            } else if (sort === 'price-desc') {
+                filtered.sort((a, b) => b.precio - a.precio);
+            } else if (sort === 'name-asc') {
+                filtered.sort((a, b) => a.nombre.localeCompare(b.nombre));
+            }
             
             return filtered;
         }
@@ -525,7 +631,7 @@
                     <div class="card-body">
                         <div class="card-meta-row">
                             <span class="card-category">${config.label}</span>
-                            <span class="card-bestseller">${isBest ? ' Top Ventas' : '⚡ Popular'}</span>
+                            <span class="card-bestseller">${isBest ? '🔥 Top Ventas' : '⚡ Popular'}</span>
                         </div>
                         <h3 class="card-title">${p.nombre}</h3>
                         <div class="card-footer">
