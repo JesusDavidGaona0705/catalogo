@@ -48,7 +48,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; }
         body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; -webkit-font-smoothing: antialiased; transition: background-color 0.4s, color 0.4s; }
         
-        /* Header */
         .site-header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); transition: var(--transition); }
         .header-inner { max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
         .brand { display: flex; align-items: center; gap: 0.75rem; }
@@ -62,7 +61,6 @@
         .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
         .theme-toggle svg { width: 20px; height: 20px; fill: currentColor; }
 
-        /* Controls */
         .controls-section { max-width: 1280px; margin: 2.5rem auto 1rem; padding: 0 1.5rem; }
         .controls-grid { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
         .search-box { position: relative; flex: 1; min-width: 260px; }
@@ -73,7 +71,6 @@
         .sort-select { padding: 0.8rem 2.5rem 0.8rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem; background: var(--surface); color: var(--text-main); cursor: pointer; appearance: none; background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1rem; transition: var(--transition); }
         .sort-select:focus { outline: none; border-color: var(--primary); }
 
-        /* Tabs */
         .tabs-container { max-width: 1280px; margin: 0 auto 1.5rem; padding: 0 1.5rem; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
         .tabs-container::-webkit-scrollbar { display: none; }
         .tabs-list { display: flex; gap: 0.6rem; padding-bottom: 0.5rem; }
@@ -83,40 +80,19 @@
         .tab-btn .count { font-size: 0.6875rem; opacity: 0.85; background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 999px; }
         .tab-btn:not(.active) .count { background: var(--accent-bg); color: var(--text-muted); }
 
-        /* Grid */
         .grid-container { max-width: 1280px; margin: 0 auto 5rem; padding: 0 1.5rem; }
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
         @media (min-width: 640px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; } }
         @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 1.75rem; } }
 
-        /* Cards */
         .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: var(--transition); cursor: pointer; position: relative; }
         .product-card:hover { border-color: rgba(185, 28, 28, 0.25); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
         .product-card:active { transform: translateY(-1px); }
         
-        /* CAMBIO: Imagen cuadrada forzada con recorte */
-        .card-img { 
-            height: 200px; 
-            aspect-ratio: 1 / 1; /* Mantiene proporción cuadrada */
-            width: 100%;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            position: relative; 
-            overflow: hidden; 
-            background: var(--accent-bg); 
-            transition: var(--transition); 
-        }
-        
-        /* CAMBIO: Imagen cubre todo el espacio (recorte) */
-        .card-img img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; /* Recorta la imagen para llenar el cuadrado */
-            object-position: center; 
-            transition: transform 0.4s ease;
-        }
-        .product-card:hover .card-img img { transform: scale(1.05); }
+        .card-img { height: 180px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: var(--accent-bg); transition: var(--transition); }
+        .product-card:hover .card-img { background: var(--primary-light); }
+        .card-img img { max-width: 85%; max-height: 85%; object-fit: contain; transition: var(--transition); }
+        .product-card:hover .card-img img { transform: scale(1.05) translateY(-3px); }
         .card-img .fallback-icon { font-size: 3.5rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
         
         .card-body { padding: 1.1rem 1.25rem 1.3rem; }
@@ -135,7 +111,6 @@
         .card-hover-action { position: absolute; bottom: 1.3rem; right: 1.25rem; opacity: 0; transition: var(--transition); font-size: 0.75rem; font-weight: 600; color: var(--primary); background: var(--primary-light); padding: 0.35rem 0.85rem; border-radius: 999px; pointer-events: none; border: 1px solid transparent; }
         .product-card:hover .card-hover-action { opacity: 1; bottom: 1.1rem; border-color: var(--primary); }
 
-        /* Empty State */
         .empty-state { text-align: center; padding: 5rem 1rem; display: none; }
         .empty-state svg { width: 64px; height: 64px; color: var(--text-muted); margin: 0 auto 1.5rem; opacity: 0.6; }
         .empty-state h3 { font-size: 1.25rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem; }
@@ -143,7 +118,6 @@
         .empty-state button { padding: 0.75rem 1.5rem; background: var(--primary); color: white; border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer; transition: var(--transition); }
         .empty-state button:hover { background: var(--primary-hover); transform: translateY(-2px); }
 
-        /* Contact */
         .contact-section { background: var(--surface); border-top: 1px solid var(--border); padding: 3.5rem 1.5rem; text-align: center; transition: var(--transition); }
         .contact-inner { max-width: 600px; margin: 0 auto; }
         .contact-title { font-size: 1.625rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem; letter-spacing: -0.02em; transition: var(--transition); }
@@ -154,11 +128,9 @@
         .contact-info { margin-top: 1.5rem; font-size: 0.8125rem; color: var(--text-muted); transition: var(--transition); }
         .contact-info span { font-weight: 600; color: var(--text-secondary); }
 
-        /* Footer */
         .site-footer { background: var(--surface); border-top: 1px solid var(--border); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.75rem; color: var(--text-muted); transition: var(--transition); }
         .site-footer p { margin-bottom: 0.3rem; }
 
-        /* Animations */
         @keyframes fadeSlide { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         .animate-card { animation: fadeSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; opacity: 0; }
     </style>
@@ -236,71 +208,73 @@
 
     <script>
         // ============================================================
-        // MAPPING: Product keywords -> Image filename (without extension)
+        // MAPPING ACTUALIZADO: Productos -> Imágenes (Todas PNG)
         // ============================================================
         const productImageMap = {
-            // Yogurts
-            'alquemix-cereal': { keywords: ['CEREAL ALQUERIA'], category: 'YOGURT' },
-            'alquemix-milo': { keywords: ['MILO'], category: 'YOGURT' },
-            'alquemix-trululu': { keywords: ['TRULULU'], category: 'YOGURT' },
-            'Mym\'s': { keywords: ['YOGURT M&M', 'M&M'], category: 'YOGURT' },
-            'yogurt-vaso': { keywords: ['YOGURT DE VASO'], category: 'YOGURT' },
-            'yogurcito-bolsa': { keywords: ['YOGURT BOLSA X9'], category: 'YOGURT' },
-            'yogurt-bolsa-litro': { keywords: ['YOGURT BOLSA', '850 GR'], category: 'YOGURT' },
-            'yogurt-litro': { keywords: ['YOGURT POTE', 'MELOCOTON', 'FRESA'], category: 'YOGURT' },
+            // YOGURT
+            'alquemix-cereal': { keywords: ['CEREAL ALQUERIA'], priority: 10 },
+            'alquemix-milo': { keywords: ['MILO'], priority: 10 },
+            'alquemix-truluu': { keywords: ['TRULULU'], priority: 10 },
+            'Mym\'s': { keywords: ['M&M', 'YOGURT M&M'], priority: 10 },
+            'yogurt-vaso': { keywords: ['YOGURT DE VASO'], priority: 10 },
+            'yogurcito-bolsa': { keywords: ['YOGURT BOLSA X9'], priority: 10 },
+            'yogurt-bolsa-900g': { keywords: ['850 GR', 'YOGURT BOLSA*'], priority: 10 },
+            'yogurt-pote-melocoton': { keywords: ['MELOCOTON'], priority: 10 },
+            'yogurt-litro': { keywords: ['YOGURT POTE', 'FRESA', 'YOGURT POTE'], priority: 5 },
+            'cremosito': { keywords: ['CREMOSITO'], priority: 10 },
+            'cereal-freskaleche': { keywords: ['CEREAL FRESKALECHE'], priority: 10 },
+            'flips': { keywords: ['FLIPS'], priority: 10 },
             
-            // Leche
-            'leche-900ml': { keywords: ['LECHE DE 900 ML', 'LECHE 900'], category: 'LECHE' },
-            'leche-deslactosada': { keywords: ['LECHE DELACTOSADA', 'DELACTOSADA ALQUERIA', 'LECHE DELACTOSA ALQUERIA'], category: 'LECHE' },
-            'delactosada-1.1l-fre': { keywords: ['DELACTOSADA'], category: 'LECHE' }, // Asigna a Delactosada 1.1L
-            'leche-alqueria': { keywords: ['LECHE ALQUERIA'], category: 'LECHE' },
-            'supercrmosa': { keywords: ['LECHE CREMOSA', 'SUPERCREMOSA'], category: 'LECHE' },
-            'freskadia-400': { keywords: ['LECHE', '400 ML'], category: 'LECHE' }, // Asignado a leche de 400ml
-            'leche-200ml': { keywords: ['LECHE', '200 ML'], category: 'LECHE' }, // Genérico para 200ml
-            'leche-polvo': { keywords: ['LECHE ALQUERIA'], category: 'LECHE' }, // Asignado a leche Alqueria 1100ml por descarte
+            // LECHE
+            'leche-1100ml-alqueria': { keywords: ['LECHE ALQUERIA'], priority: 10 },
+            'leche-delactosada900ml-alquería': { keywords: ['LECHE DELACTOSA ALQUERIA'], priority: 10 },
+            'delactosada-1.1l-freskaleche': { keywords: ['DELACTOSADA', '1100 ML', '1.1L'], priority: 10 },
+            'leche-deslactosada-freskaleche': { keywords: ['LECHE DELACTOSADA', 'DELACTOSADA ALQUERIA', 'DELACTOSADA'], priority: 8 },
+            'leche-400ml': { keywords: ['LECHE', '400 ML'], priority: 10 },
+            'leche-900ml': { keywords: ['LECHE DE 900 ML', 'LECHE 900'], priority: 10 },
+            'supercremosa': { keywords: ['LECHE CREMOSA', 'SUPERCREMOSA'], priority: 10 },
+            'leche-polvo': { keywords: ['LECHE', '200 ML'], priority: 3 },
             
-            // Cremas
-            'crema-leche-210gr': { keywords: ['CREMA DE LECHE 100X8', 'CREMA 100'], category: 'CREMAS' },
-            'crema-leche-400gr': { keywords: ['CREMA DE LECHE', '400 ML'], category: 'CREMAS' },
-            'crema-leche-900gr': { keywords: ['CREMA DE LECHE', '900 ML'], category: 'CREMAS' },
-            'crema-display-fresk': { keywords: ['CREMA DE LECHE X8', 'CREMA X8', 'CREMA DISPLAY'], category: 'CREMAS' },
-            'crema-leche-alqueria': { keywords: ['CREMA DE LECHE ALQUERIA', '1000 ML', '1OOO'], category: 'CREMAS' },
-            'suero-costeño': { keywords: ['SUERO COSTEÑO', 'SUERO'], category: 'CREMAS' },
-            'chantilly': { keywords: ['CHANTILLY'], category: 'OTROS' },
+            // AVENAS
+            'avena-bolsa': { keywords: ['AVENA BOLSA'], priority: 10 },
+            'avena-caja-autentica': { keywords: ['AVENA VASO AUTENTICA', 'AUTENTICA'], priority: 10 },
+            'avena-caja-cubana': { keywords: ['AVENA VASO CUBANA', 'CUBANA'], priority: 10 },
             
-            // Avenas
-            'avena-bolsa': { keywords: ['AVENA BOLSA'], category: 'AVENAS' },
-            'avena-caja-autentica': { keywords: ['AVENA VASO AUTENTICA', 'AUTENTICA'], category: 'AVENAS' },
-            'avena-caja-cubana': { keywords: ['AVENA VASO CUBANA', 'CUBANA'], category: 'AVENAS' },
+            // CREMAS
+            'crema-display-freskaleche-caja': { keywords: ['CREMA DE LECHE X8', 'CREMA X8', 'CREMA DISPLAY'], priority: 10 },
+            'crema-leche-170gr': { keywords: ['CREMA DE LECHE 100X8', 'CREMA DE LECHE', '170 ML'], priority: 10 },
+            'crema-leche-400gr': { keywords: ['CREMA DE LECHE', '400 ML'], priority: 10 },
+            'crema-leche-900gr': { keywords: ['CREMA DE LECHE', '900 ML', 'CREMA DE LECHE ALQUERIA'], priority: 10 },
+            'Suero-costeño': { keywords: ['SUERO COSTEÑO', 'SUERO'], priority: 10 },
+            'Chantilly': { keywords: ['CHANTILLY'], priority: 10 },
             
-            // Snacks
-            'arequipe-50g': { keywords: ['AREQUIPE*8 50', 'AREQUIPE 50', '50 GR'], category: 'SNACK' },
-            'arequipe-220gr': { keywords: ['AREQUIPE FRESKALECHE', 'AREQUIPE', '220 GR'], category: 'SNACK' },
-            '5-arequipe': { keywords: ['5 AREQUIPE', 'LITRO AREQUIPE'], category: 'SNACK' },
-            'chocoleche': { keywords: ['CHOCOLECHE'], category: 'SNACK' },
-            'gelatina': { keywords: ['GELATINA'], category: 'SNACK' },
+            // SNACK
+            'arequipe-50g': { keywords: ['AREQUIPE*8 50', 'AREQUIPE 50', '50 GR'], priority: 10 },
+            'arequipe-220gr': { keywords: ['AREQUIPE FRESKALECHE', 'AREQUIPE', '220 GR'], priority: 10 },
+            'chocoleche': { keywords: ['CHOCOLECHE'], priority: 10 },
+            'gelatina': { keywords: ['GELATINA'], priority: 10 },
+            '5-arequipe': { keywords: ['5 AREQUIPE'], priority: 10 },
             
-            // Jugos
-            'tangelo-2litros': { keywords: ['TANGELO', '2 LITROS'], category: 'JUGOS' },
-            'tangelo-286ml': { keywords: ['TANGELO', '276 ML', '286 ML'], category: 'JUGOS' },
-            'tangelo-400ml': { keywords: ['TANGELO', '400 ML'], category: 'JUGOS' },
-            'tangelo-litro': { keywords: ['TANGELO', 'LITRO', 'TANGELO 120'], category: 'JUGOS' },
-            'tangelo-bolsa': { keywords: ['TANGELO BOLSA'], category: 'JUGOS' },
-            'electrolit': { keywords: ['ELECTROLIT'], category: 'JUGOS' },
+            // JUGOS
+            'Tangelo2litros': { keywords: ['TANGELO', '2 LITROS'], priority: 10 },
+            'tangelo-286ml': { keywords: ['TANGELO', '276 ML', '286 ML'], priority: 10 },
+            'tangelo-400ml': { keywords: ['TANGELO', '400 ML'], priority: 10 },
+            'tangelo-litro': { keywords: ['TANGELO', 'LITRO', 'TANGELO 120'], priority: 10 },
+            'tangelo-bolsa': { keywords: ['TANGELO BOLSA'], priority: 10 },
+            'electrolit': { keywords: ['ELECTROLIT'], priority: 10 },
         };
 
         const categoryFallbackIcons = {
-            'LECHE': '',
-            'YOGURT': '',
-            'AVENAS': '',
-            'CREMAS': '',
-            'SNACK': '',
-            'JUGOS': '',
-            'OTROS': '',
+            'LECHE': '🥛',
+            'YOGURT': '🍶',
+            'AVENAS': '🥣',
+            'CREMAS': '🥄',
+            'SNACK': '🍫',
+            'JUGOS': '🥤',
+            'OTROS': '📦',
             '': ''
         };
 
-        // Raw product data with quantities
         const rawData = [
             { unidad: "100 GR", nombre: "CREMA DE LECHE 100X8", cantidad: -51, precio: 21000, categoria: "CREMAS" },
             { unidad: "100 GR", nombre: "CREMOSITO", cantidad: -2881, precio: 1400, categoria: "YOGURT" },
@@ -360,55 +334,44 @@
             "YOGURT": { label: "Yogurt", icon: "" },
             "AVENAS": { label: "Avenas", icon: "" },
             "CREMAS": { label: "Cremas", icon: "🥄" },
-            "SNACK": { label: "Snacks", icon: "" },
-            "JUGOS": { label: "Jugos", icon: "" },
-            "OTROS": { label: "Otros", icon: "" }
+            "SNACK": { label: "Snacks", icon: "🍫" },
+            "JUGOS": { label: "Jugos", icon: "🥤" },
+            "OTROS": { label: "Otros", icon: "📦" }
         };
         
         let activeCategory = "ALL";
         let products = [];
 
-        // Función para obtener extensión
-        function getFileExtension(filename) {
-            const pngFiles = [
-                'alquemix-cereal', 'alquemix-milo', 'alquemix-truluu',
-                'avena-bolsa', 'avena-caja-autentica', 'avena-caja-cubana',
-                'Chantilly', 'chocoleche', 'crema-display-fresk',
-                'crema-leche-210gr', 'crema-leche-400gr', 'crema-leche-900gr',
-                'delactosada-1.1l-fre', 'freskadia-400', 'gelatina',
-                'leche-deslactosada', 'leche-polvo', 'leche-200ml',
-                'Suero-costeño', 'supercrmosa', 'Tangelo2litros', 'tangelo-286ml',
-                'tangelo-400ml', 'tangelo-bolsa', 'tangelo-litro',
-                'yogurt-bolsa-litro', 'yogurt-litro'
-            ];
-            const jpgFiles = [
-                'arequipe-220gr', 'cereal-freskaleche', 'leche-900ml',
-                'Mym\'s', 'yogurcito-bolsa', 'yogurt-vaso', 'arequipe-50g', '5-arequipe'
-            ];
-            
-            for (const f of pngFiles) {
-                if (filename.includes(f) || f.includes(filename)) return '.png';
-            }
-            for (const f of jpgFiles) {
-                if (filename.includes(f) || f.includes(filename)) return '.jpg';
-            }
-            return '.png';
-        }
-
+        // ============================================================
+        // FUNCIÓN: Obtener imagen del producto con priorización
+        // ============================================================
         function getProductImage(product) {
+            let bestMatch = null;
+            let maxPriority = 0;
+            let maxKeywordLength = 0;
+
             for (const [filename, config] of Object.entries(productImageMap)) {
                 for (const keyword of config.keywords) {
                     if (product.nombre.toUpperCase().includes(keyword.toUpperCase())) {
-                        const ext = getFileExtension(filename);
-                        return `./images/${filename}${ext}`;
+                        // Priorizar por: 1) priority definido, 2) longitud de keyword (más específico)
+                        const score = config.priority * 100 + keyword.length;
+                        if (score > (maxPriority * 100 + maxKeywordLength)) {
+                            maxPriority = config.priority;
+                            maxKeywordLength = keyword.length;
+                            bestMatch = filename;
+                        }
                     }
                 }
+            }
+
+            if (bestMatch) {
+                return `./images/${bestMatch}.png`;
             }
             return null;
         }
 
         function getFallbackIcon(product) {
-            return categoryFallbackIcons[product.categoria] || '';
+            return categoryFallbackIcons[product.categoria] || '📦';
         }
 
         function init() {
@@ -549,9 +512,8 @@
                 const isBest = p.cantidad <= -1000;
                 const delay = (i % 12) * 40;
                 
-                // Renderizado de imagen con fallback
                 const imgHtml = p.imagen 
-                    ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                        <span class="fallback-icon" style="display:none;">${getFallbackIcon(p)}</span>`
                     : `<span class="fallback-icon">${getFallbackIcon(p)}</span>`;
 
@@ -563,7 +525,7 @@
                     <div class="card-body">
                         <div class="card-meta-row">
                             <span class="card-category">${config.label}</span>
-                            <span class="card-bestseller">${isBest ? '🔥 Top Ventas' : ' Popular'}</span>
+                            <span class="card-bestseller">${isBest ? ' Top Ventas' : '⚡ Popular'}</span>
                         </div>
                         <h3 class="card-title">${p.nombre}</h3>
                         <div class="card-footer">
