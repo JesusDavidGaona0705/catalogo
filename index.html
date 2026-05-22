@@ -273,8 +273,9 @@
             'Chantilly': { keywords: ['CHANTILLY'], priority: 10 },
             
             // SNACK
-            'arequipe-50g': { keywords: ['AREQUIPE*8 50', 'AREQUIPE 50', '50 GR'], priority: 10 },
-            'arequipe-220gr': { keywords: ['AREQUIPE FRESKALECHE', 'AREQUIPE', '220 GR'], priority: 10 },
+            'arequipe-50g': { keywords: ['AREQUIPE*8 50', 'AREQUIPE 50'], priority: 10 },
+            'arequipe-150gr': { keywords: ['AREQUIPE FRESKALECHE 150'], priority: 15 },
+            'arequipe-220gr': { keywords: ['AREQUIPE FRESKALECHE 220'], priority: 15 },
             'chocoleche': { keywords: ['CHOCOLECHE'], priority: 10 },
             'gelatina': { keywords: ['GELATINA'], priority: 10 },
             
@@ -322,7 +323,7 @@
             // YOGURT
             { unidad: "100 GR", nombre: "CREMOSITO", cantidad: -2881, precio: 1500, categoria: "YOGURT" },
             { unidad: "100 GR", nombre: "TRULULU ALQUERIA", cantidad: -950, precio: 3100, categoria: "YOGURT" },
-            { unidad: "100 GR", nombre: "YOGURT M&M'S", cantidad: -3301, precio: 3000, categoria: "YOGURT" },
+            { unidad: "100 GR", nombre: "YOGURT M&M'S", cantidad: -3301, precio: 3100, categoria: "YOGURT" },
             { unidad: "150 GR", nombre: "YOGURT DE VASO", cantidad: -1858, precio: 2400, categoria: "YOGURT" },
             { unidad: "170 ML", nombre: "CEREAL ALQUERIA", cantidad: -4876.6, precio: 4000, categoria: "YOGURT" },
             { unidad: "170 ML", nombre: "CEREAL FRESKALECHE", cantidad: -9028, precio: 3700, categoria: "YOGURT" },
@@ -342,7 +343,7 @@
             { unidad: "900 ML", nombre: "LECHE DE 900 ML", cantidad: -12963, precio: 4000, categoria: "LECHE" },
             { unidad: "400 ML", nombre: "LECHE", cantidad: -17780, precio: 2000, categoria: "LECHE" },
             { unidad: "200 ML", nombre: "LECHE", cantidad: -4535, precio: 1000, categoria: "LECHE" },
-            { unidad: "800 ML", nombre: "DELACTOSADA ALQUERIA", cantidad: -3379, precio: 4200, categoria: "LECHE" },
+            { unidad: "900 ML", nombre: "DELACTOSADA ALQUERIA", cantidad: -3379, precio: 4200, categoria: "LECHE" },
             { unidad: "400 ML", nombre: "LECHE DELACTOSADA", cantidad: -1137, precio: 2000, categoria: "LECHE" },
             { unidad: "1100 ML", nombre: "LECHE DELACTOSADA FRESKALECHE EXTRALITRO", cantidad: -121, precio: 32000, categoria: "LECHE" },
             { unidad: "1100 ML", nombre: "LECHE DELACTOSADA ALQUERÍA MEGALITRO", cantidad: -1, precio: 34000, categoria: "LECHE" },
@@ -460,6 +461,14 @@ function getProductImage(product) {
 
     if (name === 'LECHE ALMENDRAS') {
         return './images/leche-almendras.png';
+    }
+
+    if (name === 'AREQUIPE FRESKALECHE' && unit === '150 GR') {
+        return './images/arequipe-150gr.png';
+    }
+
+    if (name === 'AREQUIPE FRESKALECHE' && unit === '220 GR') {
+        return './images/arequipe-220gr.png';
     }
 
     // =========================================================
