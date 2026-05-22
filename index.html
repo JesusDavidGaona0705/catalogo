@@ -82,8 +82,9 @@
 
         .grid-container { max-width: 1280px; margin: 0 auto 5rem; padding: 0 1.5rem; }
         
-        /* GRID RESPONSIVE */
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        /* GRID RESPONSIVE MEJORADO */
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+        @media (min-width: 480px) { .product-grid { gap: 1rem; } }
         @media (min-width: 640px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
         @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; } }
 
@@ -91,29 +92,45 @@
         .product-card:hover { border-color: rgba(185, 28, 28, 0.25); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
         .product-card:active { transform: translateY(-1px); }
         
-        .card-img { height: 160px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: var(--accent-bg); transition: var(--transition); }
-        @media (max-width: 480px) { .card-img { height: 140px; } }
+        .card-img { height: 140px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: var(--accent-bg); transition: var(--transition); flex-shrink: 0; }
+        @media (min-width: 480px) { .card-img { height: 160px; } }
         
         .product-card:hover .card-img { background: var(--primary-light); }
         .card-img img { max-width: 85%; max-height: 85%; object-fit: contain; transition: var(--transition); }
         .product-card:hover .card-img img { transform: scale(1.05) translateY(-3px); }
-        .card-img .fallback-icon { font-size: 3rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .card-img .fallback-icon { font-size: 2.5rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        @media (min-width: 480px) { .card-img .fallback-icon { font-size: 3rem; } }
         
-        .card-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; }
-        .card-meta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-        .card-category { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); background: var(--accent-bg); padding: 3px 9px; border-radius: 6px; transition: var(--transition); }
-        .card-bestseller { font-size: 0.6875rem; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 3px 8px; border-radius: 6px; display: none; }
+        .card-body { padding: 0.75rem; flex: 1; display: flex; flex-direction: column; }
+        @media (min-width: 480px) { .card-body { padding: 1rem; } }
+        
+        .card-meta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        @media (min-width: 480px) { .card-meta-row { margin-bottom: 0.5rem; } }
+        
+        .card-category { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); background: var(--accent-bg); padding: 2px 6px; border-radius: 4px; transition: var(--transition); }
+        @media (min-width: 480px) { .card-category { font-size: 0.6875rem; padding: 3px 9px; } }
+        
+        .card-bestseller { font-size: 0.625rem; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 2px 6px; border-radius: 4px; display: none; }
+        @media (min-width: 480px) { .card-bestseller { font-size: 0.6875rem; padding: 3px 8px; } }
         .product-card:hover .card-bestseller { display: inline-block; }
         
-        .card-title { font-size: 0.875rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: var(--transition); flex-grow: 1; }
+        .card-title { font-size: 0.8125rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.4rem; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: var(--transition); flex-grow: 1; }
+        @media (min-width: 480px) { .card-title { font-size: 0.875rem; line-height: 1.3; margin-bottom: 0.5rem; } }
         .product-card:hover .card-title { color: var(--primary); }
         
-        .card-footer { display: flex; justify-content: space-between; align-items: baseline; margin-top: auto; gap: 0.5rem; }
-        .card-size-badge { font-size: 0.6875rem; font-weight: 600; color: var(--text-secondary); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; transition: var(--transition); white-space: nowrap; }
+        .card-footer { display: flex; justify-content: space-between; align-items: baseline; margin-top: auto; gap: 0.4rem; flex-wrap: wrap; }
+        @media (min-width: 480px) { .card-footer { gap: 0.5rem; } }
+        
+        .card-size-badge { font-size: 0.625rem; font-weight: 600; color: var(--text-secondary); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; transition: var(--transition); white-space: nowrap; flex-shrink: 0; }
+        @media (min-width: 480px) { .card-size-badge { font-size: 0.6875rem; padding: 2px 8px; } }
         .product-card:hover .card-size-badge { border-color: var(--primary); color: var(--primary); }
-        .card-price { font-size: 1rem; font-weight: 700; color: var(--primary); letter-spacing: -0.01em; transition: var(--transition); white-space: nowrap; }
-        .card-hover-action { position: absolute; bottom: 1rem; right: 1rem; opacity: 0; transition: var(--transition); font-size: 0.75rem; font-weight: 600; color: var(--primary); background: var(--primary-light); padding: 0.35rem 0.85rem; border-radius: 999px; pointer-events: none; border: 1px solid transparent; }
-        .product-card:hover .card-hover-action { opacity: 1; bottom: 0.9rem; border-color: var(--primary); }
+        
+        .card-price { font-size: 0.9375rem; font-weight: 700; color: var(--primary); letter-spacing: -0.01em; transition: var(--transition); white-space: nowrap; flex-shrink: 0; }
+        @media (min-width: 480px) { .card-price { font-size: 1rem; } }
+        
+        .card-hover-action { position: absolute; bottom: 0.75rem; right: 0.75rem; opacity: 0; transition: var(--transition); font-size: 0.6875rem; font-weight: 600; color: var(--primary); background: var(--primary-light); padding: 0.25rem 0.75rem; border-radius: 999px; pointer-events: none; border: 1px solid transparent; }
+        @media (min-width: 480px) { .card-hover-action { bottom: 1rem; right: 1rem; font-size: 0.75rem; } }
+        .product-card:hover .card-hover-action { opacity: 1; border-color: var(--primary); }
 
         .empty-state { text-align: center; padding: 5rem 1rem; display: none; }
         .empty-state svg { width: 64px; height: 64px; color: var(--text-muted); margin: 0 auto 1.5rem; opacity: 0.6; }
@@ -212,7 +229,7 @@
 
     <script>
         // ============================================================
-        // MAPPING: Productos -> Imágenes (Corregido para Tangelos y 400gr)
+        // MAPPING: Productos -> Imágenes
         // ============================================================
         const productImageMap = {
             // YOGURT
@@ -261,7 +278,7 @@
             'chocoleche': { keywords: ['CHOCOLECHE'], priority: 10 },
             'gelatina': { keywords: ['GELATINA'], priority: 10 },
             
-            // JUGOS - Mapeo específico corregido por unidad
+            // JUGOS
             'Tangelo2litros': { keywords: ['TANGELO', '2 LITROS'], priority: 10 },
             'tangelo-286ml': { keywords: ['TANGELO', '286 ML'], priority: 10 },
             'tangelo-400ml': { keywords: ['TANGELO', '400 ML'], priority: 10 },
@@ -281,7 +298,7 @@
         };
 
         // ============================================================
-        // ORDEN PERSONALIZADO POR CATEGORÍA (solo para tabs específicas)
+        // ORDEN PERSONALIZADO POR CATEGORÍA
         // ============================================================
         const categoryOrderPriority = {
             'LECHE': 1,
@@ -293,13 +310,13 @@
             'OTROS': 7
         };
 
-        // Datos RAW corregidos (TODOS LOS NOMBRES EN MAYÚSCULAS)
+        // Datos RAW con precios actualizados
         const rawData = [
             // CREMAS
             { unidad: "125 ML", nombre: "CREMA DE LECHE X8", cantidad: -884, precio: 22000, categoria: "CREMAS" },
             { unidad: "170 GR", nombre: "CREMA DE LECHE", cantidad: -5804, precio: 4200, categoria: "CREMAS" },
             { unidad: "400 GR", nombre: "CREMA DE LECHE", cantidad: -2880, precio: 9800, categoria: "CREMAS" },
-            { unidad: "850 GR", nombre: "CREMA DE LECHE ALQUERIA", cantidad: 6, precio: 18500, categoria: "CREMAS" },
+            { unidad: "850 GR", nombre: "CREMA DE LECHE ALQUERIA", cantidad: 6, precio: 19000, categoria: "CREMAS" },
             { unidad: "200 GR", nombre: "SUERO COSTEÑO", cantidad: -3158, precio: 4500, categoria: "CREMAS" },
             { unidad: "250 GR", nombre: "CHANTILLY", cantidad: -86, precio: 17000, categoria: "CREMAS" },
             
@@ -314,15 +331,15 @@
             { unidad: "170 ML", nombre: "MILO", cantidad: -437, precio: 4000, categoria: "YOGURT" },
             { unidad: "1000 ML", nombre: "YOGURT POTE MELOCOTON", cantidad: -6, precio: 15000, categoria: "YOGURT" },
             { unidad: "200 ML", nombre: "YOGURT BOLSA X9", cantidad: -1042, precio: 13500, categoria: "YOGURT" },
-            { unidad: "850 GR", nombre: "YOGURT BOLSA* 850 GR", cantidad: -582, precio: 6000, categoria: "YOGURT" },
+            { unidad: "850 GR", nombre: "YOGURT BOLSA* 850 GR", cantidad: -582, precio: 5700, categoria: "YOGURT" },
             { unidad: "LITRO", nombre: "YOGURT POTE FRESA", cantidad: 0, precio: 15000, categoria: "YOGURT" },
 
             // AVENAS
             { unidad: "200 ML", nombre: "AVENA BOLSA X 8", cantidad: -1197, precio: 15000, categoria: "AVENAS" },
-            { unidad: "220 ML", nombre: "AVENA VASO AUTENTICA", cantidad: -1757, precio: 3100, categoria: "AVENAS" },
+            { unidad: "220 ML", nombre: "AVENA VASO AUTENTICA", cantidad: -1757, precio: 2900, categoria: "AVENAS" },
             { unidad: "220 ML", nombre: "AVENA VASO CUBANA", cantidad: -433, precio: 3100, categoria: "AVENAS" },
 
-            // LECHE (Nombres en MAYÚSCULAS)
+            // LECHE
             { unidad: "900 ML", nombre: "LECHE DE 900 ML", cantidad: -12963, precio: 4000, categoria: "LECHE" },
             { unidad: "400 ML", nombre: "LECHE", cantidad: -17780, precio: 2000, categoria: "LECHE" },
             { unidad: "200 ML", nombre: "LECHE", cantidad: -4535, precio: 1000, categoria: "LECHE" },
@@ -330,7 +347,7 @@
             { unidad: "400 ML", nombre: "LECHE DELACTOSADA", cantidad: -1137, precio: 2000, categoria: "LECHE" },
             { unidad: "1100 ML", nombre: "LECHE DELACTOSADA FRESKALECHE EXTRALITRO", cantidad: -121, precio: 32000, categoria: "LECHE" },
             { unidad: "1100 ML", nombre: "LECHE DELACTOSADA ALQUERÍA MEGALITRO", cantidad: -1, precio: 34000, categoria: "LECHE" },
-            { unidad: "1000 ML", nombre: "LECHE ALQUERÍA SUPERCREMOSA MEGALITRO", cantidad: -6, precio: 35000, categoria: "LECHE" },
+            { unidad: "1000 ML", nombre: "LECHE ALQUERÍA SUPERCREMOSA MEGALITRO", cantidad: -6, precio: 34000, categoria: "LECHE" },
             { unidad: "1100 ML", nombre: "LECHE ALQUERIA", cantidad: -1848, precio: 4700, categoria: "LECHE" },
             { unidad: "LITRO", nombre: "LECHE ALMENDRAS", cantidad: -15, precio: 16000, categoria: "LECHE" },
             
@@ -347,6 +364,7 @@
             { unidad: "400 ML", nombre: "TANGELO", cantidad: -1688, precio: 1500, categoria: "JUGOS" },
             { unidad: "LITRO", nombre: "TANGELO", cantidad: -223, precio: 3500, categoria: "JUGOS" },
             { unidad: "2 LITROS", nombre: "TANGELO", cantidad: -32, precio: 7200, categoria: "JUGOS" },
+            { unidad: "625ML", nombre: "ELECTROLIT", cantidad: 4.42, precio: 80000, categoria: "JUGOS" }
         ];
 
         const categoryTabsOrder = ["ALL", "LECHE", "YOGURT", "AVENAS", "CREMAS", "SNACK", "JUGOS"];
@@ -364,14 +382,44 @@
         let activeCategory = "ALL";
         let products = [];
 
+        // ============================================================
+        // FUNCIÓN CORREGIDA: Asignación de imágenes por unidad específica
+        // ============================================================
         function getProductImage(product) {
+            const name = product.nombre.toUpperCase();
+            const unit = product.unidadClean;
+            
+            // CORRECCIÓN: Asignación específica para Tangelos según unidad
+            if (name.includes('TANGELO')) {
+                if (unit === '2 LITROS') return './images/Tangelo2litros.png';
+                if (unit === '286 ML') return './images/tangelo-286ml.png';
+                if (unit === '400 ML') return './images/tangelo-400ml.png';
+                if (unit === 'LITRO') return './images/tangelo-litro.png';
+                if (name.includes('120*30')) return './images/tangelo-bolsa.png';
+            }
+            
+            // CORRECCIÓN: Asignación específica para Cremas de Leche según unidad
+            if (name.includes('CREMA DE LECHE')) {
+                if (name.includes('X8') || name.includes('100X8')) return './images/crema-display-freskaleche-caja.png';
+                if (name.includes('ALQUERIA')) return './images/crema-leche-900gr.png';
+                if (unit === '170 GR') return './images/crema-leche-170gr.png';
+                if (unit === '400 GR') return './images/crema-leche-400gr.png';
+                if (unit === '900 ML') return './images/crema-leche-900gr.png';
+            }
+            
+            // Lógica general para otros productos
             let bestMatch = null;
             let maxPriority = 0;
             let maxKeywordLength = 0;
 
             for (const [filename, config] of Object.entries(productImageMap)) {
+                // Saltar productos que ya manejamos explícitamente
+                if (filename.includes('crema-leche') || filename.includes('tangelo')) {
+                    continue;
+                }
+                
                 for (const keyword of config.keywords) {
-                    if (product.nombre.toUpperCase().includes(keyword.toUpperCase())) {
+                    if (name.includes(keyword.toUpperCase())) {
                         const score = config.priority * 100 + keyword.length;
                         if (score > (maxPriority * 100 + maxKeywordLength)) {
                             maxPriority = config.priority;
@@ -559,15 +607,10 @@
                 });
             }
 
-            // ORDENAMIENTO CORREGIDO:
-            // En "TODOS": Solo ordenar por cantidad (más vendidos primero), sin agrupar por categoría
-            // En categorías específicas: Usar orden personalizado + ventas
             if (sort === 'bestseller' || sort === 'default') {
                 if (activeCategory === 'ALL') {
-                    // En "TODOS": solo ordenar por cantidad de ventas
                     filtered.sort((a, b) => a.cantidad - b.cantidad);
                 } else {
-                    // En categorías específicas: usar orden personalizado + ventas
                     filtered.sort((a, b) => {
                         const orderA = getCustomSortOrder(a);
                         const orderB = getCustomSortOrder(b);
