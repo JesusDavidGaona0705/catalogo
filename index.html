@@ -250,13 +250,13 @@
             'leche-1100ml-alqueria': { keywords: ['LECHE ALQUERIA'], priority: 10 },
             'leche-delactosada-800ml-alquería': { keywords: ['DELACTOSADA ALQUERIA'], priority: 10 },
             'delactosada-1100ml-fraskaleche': { keywords: ['FRESKALECHE EXTRALITRO', 'DELACTOSADA FRESKALECHE'], priority: 10 },
-            'delactosada-alqueria-1100ml-megalitro': { keywords: ['ALQUERÍA MEGALITRO', 'DELACTOSADA ALQUERÍA'], priority: 10 },
+            'delactosada-alqueria-1100ml-megalitro': { keywords: ['ALQUERIA MEGALITRO', 'DELACTOSADA ALQUERIA MEGALITRO'], priority: 20 },
             'leche-deslactosada-freskaleche-400ml': { keywords: ['LECHE DELACTOSADA', '400 ML'], priority: 10 },
             'leche-400ml': { keywords: ['LECHE', '400 ML'], priority: 10 },
             'leche-900ml': { keywords: ['LECHE DE 900 ML', 'LECHE 900'], priority: 10 },
             'supercremosa': { keywords: ['LECHE CREMOSA', 'SUPERCREMOSA'], priority: 10 },
-            'leche-polvo': { keywords: ['LECHE', '200 ML'], priority: 3 },
-            'leche-almendras': { keywords: ['LECHE ALMENDRAS'], priority: 10 },
+            'leche-200ml': { keywords: ['LECHE', '200 ML'], priority: 3 },
+            'leche-almendras': { keywords: ['LECHE ALMENDRAS'], priority: 20 },
             'freskadia-400': { keywords: ['FREKADIA', '400 ML', '100% LECHE'], priority: 10 },
             
             // AVENAS
@@ -444,6 +444,22 @@ function getProductImage(product) {
         if (unit === '400 GR') {
             return './images/crema-leche-400gr.png';
         }
+    }
+
+    // =========================================================
+    // LECHE (matching explícito por nombre y unidad)
+    // =========================================================
+
+    if (name === 'LECHE' && unit === '200 ML') {
+        return './images/leche-200ml.png';
+    }
+
+    if (name.includes('DELACTOSADA ALQUERIA') && name.includes('MEGALITRO')) {
+        return './images/delactosada-alqueria-1100ml-megalitro.png';
+    }
+
+    if (name === 'LECHE ALMENDRAS') {
+        return './images/leche-almendras.png';
     }
 
     // =========================================================
