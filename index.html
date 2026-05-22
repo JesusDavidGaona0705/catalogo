@@ -385,56 +385,110 @@
         // ============================================================
         // FUNCIÓN CORREGIDA: Asignación de imágenes por unidad específica
         // ============================================================
-        function getProductImage(product) {
-            const name = product.nombre.toUpperCase();
-            const unit = product.unidadClean;
-            
-            // CORRECCIÓN: Asignación específica para Tangelos según unidad
-            if (name.includes('TANGELO')) {
-                if (unit === '2 LITROS') return './images/Tangelo2litros.png';
-                if (unit === '286 ML') return './images/tangelo-286ml.png';
-                if (unit === '400 ML') return './images/tangelo-400ml.png';
-                if (unit === 'LITRO') return './images/tangelo-litro.png';
-                if (name.includes('120*30')) return './images/tangelo-bolsa.png';
-            }
-            
-            // CORRECCIÓN: Asignación específica para Cremas de Leche según unidad
-            if (name.includes('CREMA DE LECHE')) {
-                if (name.includes('X8') || name.includes('100X8')) return './images/crema-display-freskaleche-caja.png';
-                if (name.includes('ALQUERIA')) return './images/crema-leche-900gr.png';
-                if (unit === '170 GR') return './images/crema-leche-170gr.png';
-                if (unit === '400 GR') return './images/crema-leche-400gr.png';
-                if (unit === '900 ML') return './images/crema-leche-900gr.png';
-            }
-            
-            // Lógica general para otros productos
-            let bestMatch = null;
-            let maxPriority = 0;
-            let maxKeywordLength = 0;
+function normalizeText(str) {
+    return String(str || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toUpperCase()
+        .trim();
+}
 
-            for (const [filename, config] of Object.entries(productImageMap)) {
-                // Saltar productos que ya manejamos explícitamente
-                if (filename.includes('crema-leche') || filename.includes('tangelo')) {
-                    continue;
-                }
-                
-                for (const keyword of config.keywords) {
-                    if (name.includes(keyword.toUpperCase())) {
-                        const score = config.priority * 100 + keyword.length;
-                        if (score > (maxPriority * 100 + maxKeywordLength)) {
-                            maxPriority = config.priority;
-                            maxKeywordLength = keyword.length;
-                            bestMatch = filename;
-                        }
-                    }
-                }
-            }
+function getProductImage(product) {
 
-            if (bestMatch) {
-                return `./images/${bestMatch}.png`;
-            }
-            return null;
+    const name = normalizeText(product.nombre);
+    const unit = normalizeText(product.unidadClean || '');
+
+    // =========================================================
+    // TANGELO
+    // =========================================================
+
+    if (name.includes('TANGELO')) {
+
+        if (name.includes('120*30')) {
+            return './images/tangelo-bolsa.png';
         }
+
+        if (unit === '286 ML') {
+            return './images/tangelo-286ml.png';
+        }
+
+        if (unit === '400 ML') {
+            return './images/tangelo-400ml.png';
+        }
+
+        if (unit === 'LITRO') {
+            return './images/tangelo-litro.png';
+        }
+
+        if (unit === '2 LITROS') {
+            return './images/Tangelo2litros.png';
+        }
+    }
+
+    // =========================================================
+    // CREMAS
+    // =========================================================
+
+    if (name.includes('CREMA DE LECHE')) {
+
+        if (name.includes('X8') || name.includes('100X8')) {
+            return './images/crema-display-freskaleche-caja.png';
+        }
+
+        if (name.includes('ALQUERIA')) {
+            return './images/crema-leche-900gr.png';
+        }
+
+        if (unit === '170 GR') {
+            return './images/crema-leche-170gr.png';
+        }
+
+        if (unit === '400 GR') {
+            return './images/crema-leche-400gr.png';
+        }
+    }
+
+    // =========================================================
+    // MATCH GENERAL
+    // =========================================================
+
+    let bestMatch = null;
+    let bestScore = -1;
+
+    for (const [filename, config] of Object.entries(productImageMap)) {
+
+        // evitar conflictos con tangelo/cremas
+        if (
+            filename.includes('tangelo') ||
+            filename.includes('crema-leche')
+        ) {
+            continue;
+        }
+
+        for (const keyword of config.keywords) {
+
+            const normalizedKeyword =
+                normalizeText(keyword);
+
+            if (name.includes(normalizedKeyword)) {
+
+                const score =
+                    (config.priority * 1000) +
+                    normalizedKeyword.length;
+
+                if (score > bestScore) {
+
+                    bestScore = score;
+                    bestMatch = filename;
+                }
+            }
+        }
+    }
+
+    return bestMatch
+        ? `./images/${bestMatch}.png`
+        : null;
+}
 
         function getCustomSortOrder(product) {
             const name = product.nombre.toUpperCase().trim();
@@ -499,31 +553,69 @@
         }
 
         function processProducts() {
-            products = rawData.map(p => ({
-                ...p,
-                categoria: p.categoria.trim() || "OTROS",
-                etiquetaTamano: "",
-                unidadClean: p.unidad.replace("OOO", "000"),
-                imagen: getProductImage(p)
-            }));
 
-            const groups = {};
-            products.forEach((p, idx) => {
-                const baseName = p.nombre.replace(/\d+[Xx*]?\d*/g, '').replace(/\b\d+\s*(ML|GR|LITRO|LITROS|OOO|GRAMO)\b/gi, '').replace(/\s+/g, ' ').trim();
-                if (!groups[baseName]) groups[baseName] = [];
-                groups[baseName].push({ idx, vol: extractVolume(p.unidadClean) });
-            });
+    products = rawData.map(p => {
 
-            Object.values(groups).forEach(group => {
-                if (group.length > 1) {
-                    group.sort((a, b) => a.vol - b.vol);
-                    const labels = ["Pequeño", "Mediano", "Grande", "Extra Grande"];
-                    group.forEach((g, i) => {
-                        products[g.idx].etiquetaTamano = labels[Math.min(i, labels.length - 1)];
-                    });
-                }
+        const unidadClean = p.unidad
+            .replace('OOO', '000')
+            .trim();
+
+        const processedProduct = {
+            ...p,
+            categoria: p.categoria.trim() || 'OTROS',
+            etiquetaTamano: '',
+            unidadClean
+        };
+
+        // IMPORTANTE:
+        // ahora unidadClean YA existe
+        processedProduct.imagen =
+            getProductImage(processedProduct);
+
+        return processedProduct;
+    });
+
+    const groups = {};
+
+    products.forEach((p, idx) => {
+
+        const baseName = p.nombre
+            .replace(/\d+[Xx*]?\d*/g, '')
+            .replace(/\b\d+\s*(ML|GR|LITRO|LITROS|OOO|GRAMO)\b/gi, '')
+            .replace(/\s+/g, ' ')
+            .trim();
+
+        if (!groups[baseName]) {
+            groups[baseName] = [];
+        }
+
+        groups[baseName].push({
+            idx,
+            vol: extractVolume(p.unidadClean)
+        });
+    });
+
+    Object.values(groups).forEach(group => {
+
+        if (group.length > 1) {
+
+            group.sort((a, b) => a.vol - b.vol);
+
+            const labels = [
+                'Pequeño',
+                'Mediano',
+                'Grande',
+                'Extra Grande'
+            ];
+
+            group.forEach((g, i) => {
+
+                products[g.idx].etiquetaTamano =
+                    labels[Math.min(i, labels.length - 1)];
             });
         }
+    });
+}
 
         function extractVolume(unidad) {
             const match = unidad.match(/(\d+(?:\.\d+)?)\s*(.*)/i);
